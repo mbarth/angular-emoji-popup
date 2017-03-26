@@ -1,53 +1,45 @@
 /*! Angular Emoji 1.0.0 2014-12-27 */
 
 'use strict';
-    
-function cancelEvent (event) {
-  event = event || window.event;
-  if (event) {
-    event = event.originalEvent || event;
 
-    if (event.stopPropagation) event.stopPropagation();
-    if (event.preventDefault) event.preventDefault();
-  }
+function cancelEvent(event) {
+    event = event || window.event;
+    if (event) {
+        event = event.originalEvent || event;
 
-  return false;
+        if (event.stopPropagation) event.stopPropagation();
+        if (event.preventDefault) event.preventDefault();
+    }
+
+    return false;
 }
 
 
-
-
 //ConfigStorage
-(function(window)
-{
+(function (window) {
     var keyPrefix = '';
     var noPrefix = false;
     var cache = {};
     var useCs = !!(window.chrome && chrome.storage && chrome.storage.local);
     var useLs = !useCs && !!window.localStorage;
 
-    function storageSetPrefix(newPrefix)
-    {
+    function storageSetPrefix(newPrefix) {
         keyPrefix = newPrefix;
     }
 
-    function storageSetNoPrefix()
-    {
+    function storageSetNoPrefix() {
         noPrefix = true;
     }
 
-    function storageGetPrefix()
-    {
-        if (noPrefix)
-        {
+    function storageGetPrefix() {
+        if (noPrefix) {
             noPrefix = false;
             return '';
         }
         return keyPrefix;
     }
 
-    function storageGetValue()
-    {
+    function storageGetValue() {
         var keys = Array.prototype.slice.call(arguments),
             callback = keys.pop(),
             result = [],
@@ -57,54 +49,42 @@ function cancelEvent (event) {
             prefix = storageGetPrefix(),
             i, key;
 
-        for (i = 0; i < keys.length; i++)
-        {
+        for (i = 0; i < keys.length; i++) {
             key = keys[i] = prefix + keys[i];
-            if (key.substr(0, 3) != 'xt_' && cache[key] !== undefined)
-            {
+            if (key.substr(0, 3) != 'xt_' && cache[key] !== undefined) {
                 result.push(cache[key]);
             }
-            else if (useLs)
-            {
-                try
-                {
+            else if (useLs) {
+                try {
                     value = localStorage.getItem(key);
                 }
-                catch (e)
-                {
+                catch (e) {
                     useLs = false;
                 }
-                try
-                {
+                try {
                     value = (value === undefined || value === null) ? false : JSON.parse(value);
                 }
-                catch (e)
-                {
+                catch (e) {
                     value = false;
                 }
                 result.push(cache[key] = value);
             }
-            else if (!useCs)
-            {
+            else if (!useCs) {
                 result.push(cache[key] = false);
             }
-            else
-            {
+            else {
                 allFound = false;
             }
         }
 
-        if (allFound)
-        {
+        if (allFound) {
             return callback(single ? result[0] : result);
         }
 
-        chrome.storage.local.get(keys, function(resultObj)
-        {
+        chrome.storage.local.get(keys, function (resultObj) {
             var value;
             result = [];
-            for (i = 0; i < keys.length; i++)
-            {
+            for (i = 0; i < keys.length; i++) {
                 key = keys[i];
                 value = resultObj[key];
                 value = value === undefined || value === null ? false : JSON.parse(value);
@@ -115,42 +95,33 @@ function cancelEvent (event) {
         });
     };
 
-    function storageSetValue(obj, callback)
-    {
+    function storageSetValue(obj, callback) {
         var keyValues = {},
             prefix = storageGetPrefix(),
             key, value;
 
-        for (key in obj)
-        {
-            if (obj.hasOwnProperty(key))
-            {
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) {
                 value = obj[key];
                 key = prefix + key;
                 cache[key] = value;
                 value = JSON.stringify(value);
-                if (useLs)
-                {
-                    try
-                    {
+                if (useLs) {
+                    try {
                         localStorage.setItem(key, value);
                     }
-                    catch (e)
-                    {
+                    catch (e) {
                         useLs = false;
                     }
                 }
-                else
-                {
+                else {
                     keyValues[key] = value;
                 }
             }
         }
 
-        if (useLs || !useCs)
-        {
-            if (callback)
-            {
+        if (useLs || !useCs) {
+            if (callback) {
                 callback();
             }
             return;
@@ -159,39 +130,31 @@ function cancelEvent (event) {
         chrome.storage.local.set(keyValues, callback);
     };
 
-    function storageRemoveValue()
-    {
+    function storageRemoveValue() {
         var keys = Array.prototype.slice.call(arguments),
             prefix = storageGetPrefix(),
             i, key, callback;
 
-        if (typeof keys[keys.length - 1] === 'function')
-        {
+        if (typeof keys[keys.length - 1] === 'function') {
             callback = keys.pop();
         }
 
-        for (i = 0; i < keys.length; i++)
-        {
+        for (i = 0; i < keys.length; i++) {
             key = keys[i] = prefix + keys[i];
             delete cache[key];
-            if (useLs)
-            {
-                try
-                {
+            if (useLs) {
+                try {
                     localStorage.removeItem(key);
                 }
-                catch (e)
-                {
+                catch (e) {
                     useLs = false;
                 }
             }
         }
-        if (useCs)
-        {
+        if (useCs) {
             chrome.storage.local.remove(keys, callback);
         }
-        else if (callback)
-        {
+        else if (callback) {
             callback();
         }
     };
