@@ -7,12 +7,14 @@ emojiPlugin.directive('emojiInsert', function () {
         restrict: 'AE',
         scope: {
             emojiTextAreaId: '=',
-            emojiButtonId: '='
+            emojiButtonId: '=',
+            prefixSpace: '=?'
         },
         link: function (scope, element, attrs) {
+            var prefixSpace = attrs.prefixSpace ? attrs.prefixSpace === 'true' : false;
             var emojiArea = $('#' + attrs.emojiTextAreaId).emojiarea({
                 button: $('#' + attrs.emojiButtonId, element)[0],
-                prefixSpace: false
+                prefixSpace: prefixSpace
             });
         }
     };
