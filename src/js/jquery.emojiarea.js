@@ -276,7 +276,7 @@
             + xoffset + 'px ' + yoffset + 'px no-repeat;';
         style += 'background-size:' + scaledWidth + 'px ' + scaledHeight
             + 'px;';
-        return '<images src="../images/blank.gif" class="images" style="'
+        return '<images src="' + $.emojiarea.imagesPath + '/blank.gif" class="images" style="'
             + style + '" alt="' + util.htmlEntities(name) + '">';
     };
 

@@ -54,7 +54,7 @@ img.emoji {
   width: 23px;
   height: 23px;
   vertical-align: text-top;
-  background: url(#{$icons_url}/IconsetW.png) -10px (-4px / 42px) 1171px no-repeat;
+  background: url(/#{$icons_url}/IconsetW.png) -10px (-4px / 42px) 1171px no-repeat;
   opacity: 0.8;
 }
 
@@ -133,12 +133,12 @@ img.emoji {
   display: inline-block;
   width: 24px;
   height: 29px;
-  background: url(#{$icons_url}/IconsetSmiles.png) no-repeat;
+  background: url(/#{$icons_url}/IconsetSmiles.png) no-repeat;
   background-size: 42px 350px;
 }
 
 .is_1x .emoji-menu-tabs .emoji-menu-tab {
-  background-image: url(#{$icons_url}/IconsetSmiles_1x.png);
+  background-image: url(/#{$icons_url}/IconsetSmiles_1x.png);
 }
 
 .emoji-menu-tabs {

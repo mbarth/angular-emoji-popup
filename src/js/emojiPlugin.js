@@ -24,7 +24,8 @@ emojiPlugin.config(['$sceProvider', function ($sceProvider) {
         }
     }
 
-    $.emojiarea.spritesheetPath = 'images/emojisprite_!.png';
+    $.emojiarea.imagesPath = '/images/emojis';
+    $.emojiarea.spritesheetPath = $.emojiarea.imagesPath + '/emojisprite_!.png';
     $.emojiarea.spritesheetDimens = Config.EmojiCategorySpritesheetDimens;
     $.emojiarea.iconSize = 20;
     $.emojiarea.icons = icons;
