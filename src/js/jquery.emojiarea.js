@@ -325,6 +325,11 @@
             util.emojiInserted(emoji, this.menu);
 
             angular.element(this.$textarea).triggerHandler('change');
+        } else if (!textAreaElement[0].maxLength || textAreaElement[0].maxLength === -1) {
+            // support for textareas with no maxLength restriction
+            util.insertAtCursor(Config.mapcolon[emoji], this.$textarea[0], this.options.prefixSpace);
+            util.emojiInserted(emoji, this.menu);
+            angular.element(this.$textarea).triggerHandler('change');
         }
     };
 
